@@ -9,7 +9,8 @@ install_monitoring () {
 
   VALIDATOR_NAME=$1
   PATH_TO_VALIDATOR_KEYS=/home/sol
-
+  SOLANA_USER="sol"
+  
   if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
   then
     echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
@@ -20,8 +21,6 @@ install_monitoring () {
     echo "key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Pleas verify and run the script again"
     exit
   fi
-
-  SOLANA_USER="sol"
   
   cd
   rm -rf sv_manager/
