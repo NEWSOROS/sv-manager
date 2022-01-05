@@ -21,13 +21,7 @@
 ````shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/NEWSOROS/sv-manager/main/install/install_validator.sh)"
 ````
-  <img src="docs/launch.gif" width=500>
-…and follow the wizard’s instructions (__enter your own Node name!__):
-
-  <img src="docs/wizard.gif" width=500>
-
-That's it, you are all set!
-
+ 
 ### How to update validator
 
 ````shell
@@ -47,15 +41,4 @@ That's it, you are all set!
 ## Useful links
 
 * [Solana](https://solana.com/)
-* [Monitoring Dashboard](https://solana.thevalidators.io/)
 * [Validator docs](https://docs.solana.com/running-validator)
-
-## How you can support this project
-
-- Join our Telegram community [t.me/thevalidators](https://t.me/thevalidators)
-- Fork, improve, and promote
-- Stake with [Joogh Validator](https://solanabeach.io/validator/DPmsofVJ1UMRZADgwYAHotJnazMwohHzRHSoomL6Qcao)
-- Donate Sol to [Joogh Validator Identity Account](https://joogh.io) on Solana: 8yjHdsCgx3bp2zEwGiWSMgwpFaCSzfYAHT1vk7KJBqhN
-- Donate BTC: bc1q9vkmfpmk77j2kcsdy2slnv6ld4ahg2g5guysvy
-
-### [Powered by mFactory Team](https://mfactory.tech)
