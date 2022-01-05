@@ -218,7 +218,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-sv_manager_version=${sv_manager_version:-latest2}
+sv_manager_version=${sv_manager_version:-latest}
 
 echo "installing sv manager version $sv_manager_version"
 
