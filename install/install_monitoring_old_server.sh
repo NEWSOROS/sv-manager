@@ -77,4 +77,4 @@ install_monitoring () {
 
 }
 
-install_monitoring "${1:-latest}"
+install_monitoring "${ver:-latest}"
