@@ -8,10 +8,6 @@ install_monitoring () {
 
 
   VALIDATOR_NAME=$1
-  
-  test -n "$inventory"
-  test -n "$VALIDATOR_NAME"
-  
   PATH_TO_VALIDATOR_KEYS=/home/sol
 
   if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
@@ -78,4 +74,5 @@ install_monitoring () {
 }
 
 echo "${validator_name}" "${2:-latest}"
+exit
 #install_monitoring "${validator_name}" "${2:-latest}"
