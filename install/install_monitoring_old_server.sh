@@ -5,7 +5,7 @@
 install_monitoring () {
 
   inventory="testnet.yaml" # mainnet.yaml testnet.yaml
-
+  sed -i -e 's/~\/bin\/print-keys.sh//g' /home/sol/.profile
 
   VALIDATOR_NAME=$1
   PATH_TO_VALIDATOR_KEYS=/home/sol
