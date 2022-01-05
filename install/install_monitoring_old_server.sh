@@ -73,6 +73,4 @@ install_monitoring () {
 
 }
 
-echo "${validator_name}" "${2:-latest}"
-exit
-#install_monitoring "${validator_name}" "${2:-latest}"
+install_monitoring "${1}" "${2:-latest}"
