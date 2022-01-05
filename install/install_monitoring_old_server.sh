@@ -4,10 +4,10 @@
 
 install_monitoring () {
 
-  inventory="$net.yaml" # mainnet.yaml testnet.yaml
+  inventory="${net}.yaml" # mainnet.yaml testnet.yaml
 
 
-  VALIDATOR_NAME=$validator-name
+  VALIDATOR_NAME=${validator-name}
   
   test -n "$inventory"
   test -n "$VALIDATOR_NAME"
