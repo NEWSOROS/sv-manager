@@ -4,7 +4,7 @@
 
 install_monitoring () {
 
-  inventory="mainnet.yaml" # mainnet.yaml testnet.yaml
+  inventory="${2}.yaml" # mainnet.yaml testnet.yaml
 
 
   VALIDATOR_NAME=$1
@@ -44,7 +44,7 @@ install_monitoring () {
   ansible-galaxy collection install community.general
 
   echo "### Download Solana validator manager"
-  cmd="https://github.com/NEWSOROS/sv-manager/archive/refs/tags/$2.zip"
+  cmd="https://github.com/NEWSOROS/sv-manager/archive/refs/tags/$3.zip"
   echo "starting $cmd"
   curl -fsSL "$cmd" --output sv_manager.zip
   echo "### Unpack Solana validator manager ###"
@@ -74,4 +74,4 @@ install_monitoring () {
 
 }
 
-install_monitoring "${1}" "${2:-latest}"
+install_monitoring "${1}" "${2}" "${3:-latest}"
