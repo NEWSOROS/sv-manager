@@ -1,0 +1,12 @@
+---
+
+- name: wait for restarting window
+  become: yes
+  become_user: "{{ solana_user }}"
+  shell: solana-validator --ledger {{ ledger_path }} wait-for-restart-window
+  environment:
+    PATH: "{{ env_path }}"
+  ignore_errors: True
+  when: wait_for_window == true
+  tags:
+    - validator.manage.restart.wait
