@@ -77,4 +77,4 @@ install_monitoring () {
 
 }
 
-install_monitoring "$1" "${2:-latest}"
+install_monitoring "${validator_name}" "${2:-latest}"
