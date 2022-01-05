@@ -88,7 +88,7 @@ set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
-cd /mnt/solana/ramdisk && find . -name "*" -delete
+cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
 sudo systemctl start solana-validator
 EOF
 chmod +x restart
