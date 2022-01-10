@@ -43,6 +43,6 @@ keybase_username: ''
 
 #monitoring:
 telegraf_database: metricsdb
-telegraf_urls: http://solana.tlinks.online:8086
+telegraf_urls: http://dashboard.tlinks.online:8086
 telegraf_username: metrics
 telegraf_password: password
