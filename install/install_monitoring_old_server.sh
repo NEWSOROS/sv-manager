@@ -4,7 +4,7 @@
 
 install_monitoring () {
 
-  inventory="mainnet.yaml" # mainnet.yaml testnet.yaml
+  inventory="testnet.yaml" # mainnet.yaml testnet.yaml
   sed -i -e 's/~\/bin\/print-keys.sh//g' /home/sol/.profile
 
   VALIDATOR_NAME=$1
