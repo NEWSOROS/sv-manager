@@ -13,15 +13,15 @@ sudo chmod -R go= ~/.ssh
 
 cat > create_accounts <<EOF
 #!/bin/bash -eE
-sudo --login -u solana --'export PATH="/home/solana/.local/share/solana/install/active_release/bin:\$PATH" \
-solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt \
-solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair.json  >> ~/.secrets/account-seed.txt \
-solana-keygen new --no-bip39-passphrase -o ~/.secrets/withdrawer-stake-keypair.json  >> ~/.secrets/account-seed.txt \
-solana create-vote-account ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$(solana-keygen pubkey ~/.secrets/withdrawer-stake-keypair.json) \
-solana vote-update-commission ~/.secrets/vote-account-keypair.json 10 ~/.secrets/withdrawer-stake-keypair.json \
-solana vote-authorize-withdrawer ~/.secrets/vote-account-keypair.json ~/.secrets/withdrawer-stake-keypair.json ~/.secrets/validator-keypair.json \
-echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58" \
-echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"'
+sudo --login -u solana -- export PATH="/home/solana/.local/share/solana/install/active_release/bin:\$PATH" && \
+solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt && \
+solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair.json  >> ~/.secrets/account-seed.txt && \
+solana-keygen new --no-bip39-passphrase -o ~/.secrets/withdrawer-stake-keypair.json  >> ~/.secrets/account-seed.txt && \
+solana create-vote-account ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$(solana-keygen pubkey ~/.secrets/withdrawer-stake-keypair.json) && \
+solana vote-update-commission ~/.secrets/vote-account-keypair.json 10 ~/.secrets/withdrawer-stake-keypair.json && \
+solana vote-authorize-withdrawer ~/.secrets/vote-account-keypair.json ~/.secrets/withdrawer-stake-keypair.json ~/.secrets/validator-keypair.json && \
+echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58" && \
+echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"
 EOF
 chmod +x create_accounts
 
@@ -35,7 +35,7 @@ chmod +x sol
 
 cat > catchup <<EOF
 #!/usr/bin/env bash
-if [[ \$USER != sol ]]; then
+if [[ \$USER != solana ]]; then
   sudo --login -u solana -- solana catchup /home/solana/.secrets/validator-keypair.json http://127.0.0.1:8899/ 
 else
   solana catchup /home/solana/.secrets/validator-keypair.json http://127.0.0.1:8899/
