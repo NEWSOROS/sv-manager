@@ -13,6 +13,7 @@ sudo chmod -R go= ~/.ssh
 
 cat > /home/solana/create_accounts <<EOF
 #!/bin/bash -eE
+solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
 solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
 solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair.json  >> ~/.secrets/account-seed.txt
 solana-keygen new --no-bip39-passphrase -o ~/.secrets/withdrawer-stake-keypair.json  >> ~/.secrets/account-seed.txt
