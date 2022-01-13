@@ -13,7 +13,6 @@ sudo chmod -R go= ~/.ssh
 
 cat > /home/solana/create_accounts <<EOF
 #!/bin/bash -eE
-#export PATH="/home/solana/.local/share/solana/install/active_release/bin:\$PATH"
 solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
 solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair.json  >> ~/.secrets/account-seed.txt
 solana-keygen new --no-bip39-passphrase -o ~/.secrets/withdrawer-stake-keypair.json  >> ~/.secrets/account-seed.txt
