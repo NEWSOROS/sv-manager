@@ -13,7 +13,7 @@ sudo chmod -R go= ~/.ssh
 
 cat > sol <<EOF
 #!/usr/bin/env bash
-# Switch to the sol user
+# Switch to the solana user
 set -ex
 sudo --login -u solana -- "\$@"
 EOF
