@@ -23,5 +23,12 @@
       - rsyslog
       - bc
       - lm-sensors
+      - libssl-dev
+      - libudev-dev
+      - pkg-config
+      - zlib1g-dev
+      - llvm
+      - clang
+      - make
   tags:
     - config.packages
