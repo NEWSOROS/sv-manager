@@ -8,3 +8,4 @@
     - solana_cli
     - solana_validator_bootstrap
     - monitoring
+    - rust
