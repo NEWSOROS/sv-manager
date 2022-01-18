@@ -1,0 +1,12 @@
+---
+
+- name: "download rustup-init.sh from https://www.rustup.rs"
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup-init.sh
+    mode: 0755
+
+- name: "install Rust with /tmp/rustup-init.sh, run by sol"
+  become: yes
+  become_user: solana
+  shell: '/tmp/rustup-init.sh -y'
