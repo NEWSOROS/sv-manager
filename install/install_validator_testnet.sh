@@ -301,12 +301,12 @@ while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
         param="${1/--/}"
         declare ${param}="$2"
-        echo $1 $2 // Optional to see the parameter:value result
+        echo $1 $2
    fi
 
   shift
 done
 
 sv_manager_version=${sv_manager_version:-latest}
-
+echo "${1}" "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
 install_validator "${1}" "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
