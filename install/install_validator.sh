@@ -298,7 +298,10 @@ install_validator () {
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 
 }
+EOF
 
+sudo chmod +x /home/solana/create_accounts
+sudo chown -R solana:solana /home/solana/create_accounts
 
 while [ $# -gt 0 ]; do
 
