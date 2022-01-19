@@ -249,7 +249,6 @@ install_validator () {
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  'ip': $IP, \
   }"
 
   if [ ! -z $solana_version ]
