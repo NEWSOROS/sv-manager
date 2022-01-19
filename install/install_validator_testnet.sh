@@ -192,7 +192,7 @@ install_validator () {
   inventory="testnet.yaml"
 
   VALIDATOR_NAME=$1
-  #echo $VALIDATOR_NAME
+  echo ${VALIDATOR_NAME}
   exit
   PATH_TO_VALIDATOR_KEYS=/root
 
