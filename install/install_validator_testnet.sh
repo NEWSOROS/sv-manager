@@ -192,6 +192,8 @@ install_validator () {
   inventory="testnet.yaml"
 
   VALIDATOR_NAME=$1
+  esho $VALIDATOR_NAME
+  exit
   PATH_TO_VALIDATOR_KEYS=/root
 
   if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
