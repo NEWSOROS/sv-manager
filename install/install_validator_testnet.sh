@@ -309,4 +309,4 @@ done
 
 sv_manager_version=${sv_manager_version:-latest}
 
-install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
+install_validator "${1}" "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
