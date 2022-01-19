@@ -192,8 +192,6 @@ install_validator () {
   inventory="testnet.yaml"
 
   VALIDATOR_NAME=$1
-  echo ${VALIDATOR_NAME}
-  exit
   PATH_TO_VALIDATOR_KEYS=/root
 
   if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
@@ -251,6 +249,7 @@ install_validator () {
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
+  'ip': $IP, \
   }"
 
   if [ ! -z $solana_version ]
