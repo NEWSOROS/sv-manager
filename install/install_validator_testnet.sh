@@ -296,16 +296,6 @@ sudo chmod +x /home/solana/create_accounts
 sudo chown -R solana:solana /home/solana/create_accounts
 }
 
-while [ $# -gt 0 ]; do
-
-   if [[ $1 == *"--"* ]]; then
-        param="${1/--/}"
-        declare ${param}="$2"
-        echo $1 $2
-   fi
-
-  shift
-done
 
 sv_manager_version=${sv_manager_version:-latest}
 echo "${1}" "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
