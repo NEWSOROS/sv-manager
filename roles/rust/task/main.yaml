@@ -1,0 +1,6 @@
+---
+- name: Setup RUST
+  import_tasks: rust.yaml
+  when: rust_enabled|bool
+  tags:
+    config.rust
