@@ -13,7 +13,7 @@ sudo chmod -R go= ~/.ssh
 
 cat > sol <<EOF
 #!/usr/bin/env bash
-# Switch to the sol user
+# Switch to the solana user
 set -ex
 sudo --login -u solana -- "\$@"
 EOF
@@ -289,24 +289,13 @@ install_validator () {
   sudo chown -R solana:solana /home/solana/create_accounts
   chmod +x /home/solana/create_accounts
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
-
-}
 EOF
 
 sudo chmod +x /home/solana/create_accounts
 sudo chown -R solana:solana /home/solana/create_accounts
+}
 
-while [ $# -gt 0 ]; do
-
-   if [[ $1 == *"--"* ]]; then
-        param="${1/--/}"
-        declare ${param}="$2"
-        #echo $1 $2 // Optional to see the parameter:value result
-   fi
-
-  shift
-done
 
 sv_manager_version=${sv_manager_version:-latest}
-
-install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
+echo "${1}" "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
+install_validator "${1}" "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"
