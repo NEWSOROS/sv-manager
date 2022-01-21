@@ -144,7 +144,7 @@ cat > logsoff <<EOF
 #!/usr/bin/env bash
 set -ex
 if [[ $USER != solana ]]; then
-  sudo --login -u solana --ledger /mnt/solana/ledger  -- solana-validator set-log-filter warn
+  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger  set-log-filter warn
 else
   solana-validator --ledger /mnt/solana/ledger  set-log-filter warn
 fi
