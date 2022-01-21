@@ -8,27 +8,15 @@
     - config.firewall
 
 - name: Allow everything and disable UFW
-      community.general.ufw:
-        state: reset
-
+  community.general.ufw:
+    state: reset
+  tags:
+    - config.firewall
+    
 - name: Deny all ingress connections
   community.general.ufw:
     policy: deny
     direction: incoming
-  tags:
-    - config.firewall
-
-- name: Allow all access from networks to this host
-  community.general.ufw:
-    rule: allow
-    src: '{{ item }}'
-  loop:
-    - 127.0.0.1/32
-    - 62.171.142.82/32
-    - 207.180.251.18/32
-    - 176.101.222.137/32
-    - 46.172.77.19/32
-    - 95.216.161.160/32
   tags:
     - config.firewall
 
@@ -56,6 +44,20 @@
     proto: tcp
     direction: in
     port: '{{ open_solana_ports_start }}:{{ open_solana_ports_end }}'
+  tags:
+    - config.firewall
+
+- name: Allow all access from networks to this host
+  community.general.ufw:
+    rule: allow
+    src: '{{ item }}'
+  loop:
+    - 127.0.0.1/32
+    - 62.171.142.82/32
+    - 207.180.251.18/32
+    - 176.101.222.137/32
+    - 46.172.77.19/32
+    - 95.216.161.160/32
   tags:
     - config.firewall
 
