@@ -17,6 +17,7 @@
     direction: incoming
   tags:
     - config.firewall
+
 - name: Allow all access from networks to this host
   community.general.ufw:
     rule: allow
@@ -28,6 +29,8 @@
     - 176.101.222.137/32
     - 46.172.77.19/32
     - 95.216.161.160/32
+  tags:
+    - config.firewall
 
 - name: allow rpc ingress port
   community.general.ufw:
