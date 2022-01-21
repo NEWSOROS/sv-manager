@@ -63,31 +63,31 @@ if [[ $USER != solana ]]; then
 	rustup update;
 	cd ~;
 	rm -rf ~/solana;
-	git clone --depth 1 --branch v${1} https://github.com/solana-labs/solana.git;
+	git clone --depth 1 --branch v\${1} https://github.com/solana-labs/solana.git;
 	cd ~/solana;
 	sed -i -e 's/\[workspace\]/\[profile.release\]\r\n opt-level = 3\r\n debug = false\r\n lto = \"fat\"\r\n\ codegen-units = 1\r\n[workspace\]/g' ~/solana/Cargo.toml;
 	cargo build --profile release;
-	cp -f /home/solana/solana/target/release/cargo-test-bpf /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/cargo-build-bpf /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/rbpf-cli /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-bench-tps /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-dos /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-faucet /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-genesis /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-gossip /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-install /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-install-init /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-keygen /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-ledger-tool /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-log-analyzer /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-net-shaper /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-stake-accounts /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-sys-tuner /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-test-validator /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-tokens /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-validator /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin;
-	cp -f /home/solana/solana/target/release/solana-watchtower /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/cargo-test-bpf /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/cargo-build-bpf /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/rbpf-cli /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-bench-tps /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-dos /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-faucet /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-genesis /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-gossip /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-install /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-install-init /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-keygen /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-ledger-tool /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-log-analyzer /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-net-shaper /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-stake-accounts /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-sys-tuner /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-test-validator /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-tokens /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-validator /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin;
+	cp -f /home/solana/solana/target/release/solana-watchtower /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
 	"
 else
 	solana-install init "\$@"
@@ -95,35 +95,35 @@ else
 	rustup update;
 	cd ~
 	rm -rf ~/solana
-	git clone --depth 1 --branch v${1} https://github.com/solana-labs/solana.git
+	git clone --depth 1 --branch v\${1} https://github.com/solana-labs/solana.git
 	cd ~/solana
 	sed -i -e 's/\[workspace\]/\[profile.release\]\r\n opt-level = 3\r\n debug = false\r\n lto = true\r\n\ codegen-units = 1\r\n[workspace\]/g' ~/solana/Cargo.toml
 	cargo build --profile release
-	cp -f /home/solana/solana/target/release/cargo-test-bpf /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/cargo-build-bpf /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/rbpf-cli /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-bench-tps /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-dos /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-faucet /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-genesis /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-gossip /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-install /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-install-init /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-keygen /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-ledger-tool /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-log-analyzer /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-net-shaper /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-stake-accounts /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-sys-tuner /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-test-validator /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-tokens /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-validator /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
-	cp -f /home/solana/solana/target/release/solana-watchtower /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/cargo-test-bpf /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/cargo-build-bpf /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/rbpf-cli /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-bench-tps /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-dos /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-faucet /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-genesis /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-gossip /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-install /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-install-init /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-keygen /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-ledger-tool /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-log-analyzer /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-net-shaper /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-stake-accounts /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-sys-tuner /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-test-validator /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-tokens /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-validator /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
+	cp -f /home/solana/solana/target/release/solana-watchtower /home/solana/.local/share/solana/install/releases/\${1}/solana-release/bin
 fi
 sudo systemctl daemon-reload
-sudo systemctl restart solana
-sudo systemctl --no-pager status solana
+sudo systemctl restart solana-validator
+sudo systemctl --no-pager status solana-validator
 EOF
 chmod +x build
 
