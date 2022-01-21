@@ -57,7 +57,7 @@ if [[ -z $1 ]]; then
 fi
 set -ex
 if [[ $USER != solana ]]; then
-  sudo --login -u solana -- solana-install init "$@"
+  sudo --login -u solana -- solana-install init "\$@"
   sudo --login -u solana -- bash -c "
   source $HOME/.cargo/env;
 	rustup update;
@@ -90,7 +90,7 @@ if [[ $USER != solana ]]; then
 	cp -f /home/solana/solana/target/release/solana-watchtower /home/solana/.local/share/solana/install/releases/${1}/solana-release/bin
 	"
 else
-	solana-install init "$@"
+	solana-install init "\$@"
 	source $HOME/.cargo/env;
 	rustup update;
 	cd ~
@@ -132,10 +132,10 @@ cat > logs <<EOF
 set -ex
 if [[ $USER != solana ]]; then
   sudo --login -u solana -- solana-validator set-log-filter info
-  exec tail -f /mnt/solana/log/solana-validator.log "$@"  
+  exec tail -f /mnt/solana/log/solana-validator.log "\$@"  
 else
   solana-validator set-log-filter info
-  exec tail -f /mnt/solana/log/solana-validator.log "$@"
+  exec tail -f /mnt/solana/log/solana-validator.log "\$@"
 fi
 EOF
 chmod +x logs
