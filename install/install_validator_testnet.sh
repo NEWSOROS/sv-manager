@@ -131,10 +131,10 @@ cat > logs <<EOF
 #!/usr/bin/env bash
 set -ex
 if [[ $USER != solana ]]; then
-  sudo --login -u solana -- solana-validator set-log-filter info
+  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger  set-log-filter info
   exec tail -f /mnt/solana/log/solana-validator.log "\$@"  
 else
-  solana-validator set-log-filter info
+  solana-validator --ledger /mnt/solana/ledger  set-log-filter info
   exec tail -f /mnt/solana/log/solana-validator.log "\$@"
 fi
 EOF
@@ -144,9 +144,9 @@ cat > logsoff <<EOF
 #!/usr/bin/env bash
 set -ex
 if [[ $USER != solana ]]; then
-  sudo --login -u solana -- solana-validator set-log-filter warn
+  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger  set-log-filter warn
 else
-  solana-validator set-log-filter warn
+  solana-validator --ledger /mnt/solana/ledger  set-log-filter warn
 fi
 echo "LOGS OFF"
 EOF
