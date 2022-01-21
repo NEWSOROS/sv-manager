@@ -20,6 +20,15 @@
   tags:
     - config.firewall
 
+- name: allow ingress ssh
+  community.general.ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
+    direction: in
+  tags:
+    - config.firewall
+
 - name: allow rpc ingress port
   community.general.ufw:
     rule: allow
@@ -44,20 +53,6 @@
     proto: tcp
     direction: in
     port: '{{ open_solana_ports_start }}:{{ open_solana_ports_end }}'
-  tags:
-    - config.firewall
-
-- name: Allow all access from networks to this host
-  community.general.ufw:
-    rule: allow
-    src: '{{ item }}'
-  loop:
-    - 127.0.0.1/32
-    - 62.171.142.82/32
-    - 207.180.251.18/32
-    - 176.101.222.137/32
-    - 46.172.77.19/32
-    - 95.216.161.160/32
   tags:
     - config.firewall
 
