@@ -7,21 +7,27 @@
   tags:
     - config.firewall
 
+- name: Allow everything and disable UFW
+      community.general.ufw:
+        state: reset
+
 - name: Deny all ingress connections
   community.general.ufw:
     policy: deny
     direction: incoming
   tags:
     - config.firewall
-
-- name: allow ingress ssh
+- name: Allow all access from networks to this host
   community.general.ufw:
     rule: allow
-    port: ssh
-    proto: tcp
-    direction: in
-  tags:
-    - config.firewall
+    src: '{{ item }}'
+  loop:
+    - 127.0.0.1/32
+    - 62.171.142.82/32
+    - 207.180.251.18/32
+    - 176.101.222.137/32
+    - 46.172.77.19/32
+    - 95.216.161.160/32
 
 - name: allow rpc ingress port
   community.general.ufw:
