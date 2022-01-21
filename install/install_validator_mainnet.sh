@@ -51,7 +51,7 @@ chmod +x update
 cat > build <<EOF
 #!/usr/bin/env bash
 # Software update
-if [[ -z $1 ]]; then
+if [[ -z \$1 ]]; then
   echo "Usage: $0 [1]"
   exit 1
 fi
