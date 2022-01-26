@@ -281,7 +281,7 @@ install_validator () {
   then
     echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
   fi
-  cat > /home/solana/create_accounts <<EOF
+cat > /home/solana/create_accounts <<EOF
   #!/bin/bash -eE
   solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
   solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
@@ -292,10 +292,12 @@ install_validator () {
   solana vote-authorize-withdrawer ~/.secrets/vote-account-keypair.json ~/.secrets/withdrawer-stake-keypair.json ~/.secrets/validator-keypair.json
   echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58"
   echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"
-  EOF
-  sudo chown -R solana:solana /home/solana/create_accounts
-  chmod +x /home/solana/create_accounts
-  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
+EOF
+sudo chown -R solana:solana /home/solana/create_accounts
+chmod +x /home/solana/create_accounts
+echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
+sudo chmod +x /home/solana/create_accounts
+sudo chown -R solana:solana /home/solana/create_accounts
 }
 while [ $# -gt 0 ]; do
 
