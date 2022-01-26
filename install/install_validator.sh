@@ -293,8 +293,6 @@ cat > /home/solana/create_accounts <<EOF
   echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58"
   echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"
 EOF
-sudo chown -R solana:solana /home/solana/create_accounts
-chmod +x /home/solana/create_accounts
 echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 sudo chmod +x /home/solana/create_accounts
 sudo chown -R solana:solana /home/solana/create_accounts
