@@ -213,7 +213,7 @@ install_validator () {
     exit
   fi
 
-  read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "80" RAM_DISK_SIZE
+  read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "100" RAM_DISK_SIZE
   read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "200" SWAP_SIZE
 
   rm -rf sv_manager/
