@@ -23,3 +23,4 @@ maximum_local_snapshot_age: 3000
 solana_version: 1.9.9
 ramdisk_size_gb: 100
 extra_params:
+  - --full-rpc-api
