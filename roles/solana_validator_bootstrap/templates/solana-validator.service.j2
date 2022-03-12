@@ -18,8 +18,6 @@ ExecStart={{ env_path }}/solana-validator \
 --rpc-port {{ solana_rpc_port }} \
 --no-untrusted-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
---snapshot-interval-slots {{ snapshot_interval_slots }} \
---maximum-local-snapshot-age {{ maximum_local_snapshot_age }} \
 {% if not extra_params is none %}
 {% for extra_var in extra_params %}
 {{ extra_var }} \
@@ -35,6 +33,11 @@ ExecStart={{ env_path }}/solana-validator \
 --private-rpc \
 --wal-recovery-mode skip_any_corrupted_record \
 --snapshot-compression none \
+--incremental-snapshots \
+--full-snapshot-interval-slots {{ maximum_local_snapshot_age }} \
+--incremental-snapshot-interval-slots {{ snapshot_interval_slots }} \
+--maximum-full-snapshots-to-retain 1 \
+--maximum-incremental-snapshots-to-retain 2 \
 --rpc-bind-address 127.0.0.1 \
 {% endif %}
 {% if 'rpc' in group_names %}
@@ -47,8 +50,8 @@ ExecStart={{ env_path }}/solana-validator \
 --accounts {{ accounts_path }} \
 --accounts-db-caching-enabled \
 --snapshots {{ snapshots_path }} \
---dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }}
-
+--dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }} \
+--minimal-snapshot-download-speed 20000000
 
 [Install]
 WantedBy=multi-user.target
