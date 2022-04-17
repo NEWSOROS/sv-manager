@@ -32,7 +32,6 @@ ExecStart={{ env_path }}/solana-validator \
 {%if 'mainnet_validators' in group_names %}
 --private-rpc \
 --wal-recovery-mode skip_any_corrupted_record \
---snapshot-compression none \
 --incremental-snapshots \
 --full-snapshot-interval-slots {{ maximum_local_snapshot_age }} \
 --incremental-snapshot-interval-slots {{ snapshot_interval_slots }} \
