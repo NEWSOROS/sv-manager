@@ -167,6 +167,7 @@ set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
+sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
 sudo systemctl start solana-validator
 EOF
