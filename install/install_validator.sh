@@ -43,6 +43,7 @@ else
   solana-install init "\$@"
 fi
 sudo systemctl daemon-reload
+sudo systemctl restart solana-sys-tuner
 sudo systemctl restart solana-validator
 sudo systemctl --no-pager status solana-validator
 EOF
@@ -169,7 +170,9 @@ sudo systemctl stop solana-validator
 sleep 5
 sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
+sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
+sudo systemctl --no-pager status solana-validator
 EOF
 chmod +x restart
 
@@ -184,7 +187,9 @@ sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
+sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
+sudo systemctl --no-pager status solana-validator
 EOF
 chmod +x erase
 
