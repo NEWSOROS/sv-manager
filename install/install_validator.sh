@@ -170,6 +170,7 @@ sudo systemctl stop solana-validator
 sleep 5
 sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
+cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
