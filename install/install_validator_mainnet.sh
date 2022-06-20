@@ -13,7 +13,7 @@ sudo chmod -R go= ~/.ssh
 
 cat > sol <<EOF
 #!/usr/bin/env bash
-# Switch to the solana user
+# Switch to the sol user
 set -ex
 sudo --login -u solana -- "\$@"
 EOF
@@ -43,6 +43,7 @@ else
   solana-install init "\$@"
 fi
 sudo systemctl daemon-reload
+sudo systemctl restart solana-sys-tuner
 sudo systemctl restart solana-validator
 sudo systemctl --no-pager status solana-validator
 EOF
@@ -51,7 +52,7 @@ chmod +x update
 cat > build <<EOF
 #!/usr/bin/env bash
 # Software update
-if [[ -z \$1 ]]; then
+if [[ -z $1 ]]; then
   echo "Usage: $0 [1]"
   exit 1
 fi
@@ -131,10 +132,10 @@ cat > logs <<EOF
 #!/usr/bin/env bash
 set -ex
 if [[ $USER != solana ]]; then
-  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger  set-log-filter info
+  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger/ set-log-filter info
   exec tail -f /mnt/solana/log/solana-validator.log "\$@"  
 else
-  solana-validator --ledger /mnt/solana/ledger  set-log-filter info
+  solana-validator --ledger /mnt/solana/ledger/ set-log-filter info
   exec tail -f /mnt/solana/log/solana-validator.log "\$@"
 fi
 EOF
@@ -144,9 +145,9 @@ cat > logsoff <<EOF
 #!/usr/bin/env bash
 set -ex
 if [[ $USER != solana ]]; then
-  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger  set-log-filter warn
+  sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger/ set-log-filter warn
 else
-  solana-validator --ledger /mnt/solana/ledger  set-log-filter warn
+  solana-validator --ledger /mnt/solana/ledger/ set-log-filter warn
 fi
 echo "LOGS OFF"
 EOF
@@ -167,8 +168,12 @@ set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
+sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
+cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
+sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
+sudo systemctl --no-pager status solana-validator
 EOF
 chmod +x restart
 
@@ -183,7 +188,9 @@ sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
+sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
+sudo systemctl --no-pager status solana-validator
 EOF
 chmod +x erase
 
