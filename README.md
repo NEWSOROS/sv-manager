@@ -21,15 +21,6 @@
 ````shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/NEWSOROS/sv-manager/main/install/install_validator.sh)"
 ````
-### How to setup old node
-````shell
-curl -fsSL https://raw.githubusercontent.com/NEWSOROS/sv-manager/main/install/install_monitoring_old_server.sh | /bin/bash -s -- v019-testnet
-````
-### How to update validator
-
-````shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/NEWSOROS/sv-manager/main/install/update_test_validator_version.sh)" --version 1.8.11
-````
 
 ### how to update monitoring
 
