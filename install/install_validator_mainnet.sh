@@ -201,7 +201,7 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
-cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
+cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 mkdir -p /mnt/solana/snapshots/remote
 cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.a4.finance:8899/snapshot.tar.bz2
