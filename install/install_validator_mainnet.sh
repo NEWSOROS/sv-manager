@@ -194,6 +194,24 @@ sudo systemctl --no-pager status solana-validator
 EOF
 chmod +x erase
 
+cat > snapshot <<EOF
+#!/usr/bin/env bash
+set -ex
+sudo systemctl daemon-reload
+sudo systemctl stop solana-validator
+sudo rm -rf /mnt/solana/ledger/*
+cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
+cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
+rm -rf /mnt/solana/log/*
+mkdir -p /mnt/solana/snapshots/remote
+cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.a4.finance:8899/snapshot.tar.bz2
+cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.a4.finance:8899/incremental-snapshot.tar.bz2
+sudo systemctl restart solana-sys-tuner
+sudo systemctl start solana-validator
+sudo systemctl --no-pager status solana-validator
+EOF
+chmod +x snapshot
+
 install_validator () {
 
   inventory="mainnet.yaml"
