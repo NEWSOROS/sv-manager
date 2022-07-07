@@ -10,7 +10,7 @@ RestartSec=1
 User={{ solana_user }}
 LimitNOFILE=1024000
 Environment="PATH=/bin:/usr/bin:{{ env_path }}"
-Environment="SOLANA_METRICS_CONFIG=host={{ solana_metrics_url }}"
+Environment="SOLANA_METRICS_CONFIG="host={{ solana_metrics_url }}""
 Environment="RUST_LOG={{ log_level }}"
 ExecStart={{ env_path }}/solana-validator \
 --identity {{ secrets_path }}/validator-keypair.json \
