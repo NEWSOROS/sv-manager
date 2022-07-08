@@ -206,6 +206,7 @@ rm -rf /mnt/solana/log/*
 mkdir -p /mnt/solana/snapshots/remote
 cd /mnt/solana/snapshots/remote && wget --trust-server-names http://141.94.249.88:8899/snapshot.tar.bz2
 cd /mnt/solana/snapshots/remote && wget --trust-server-names http://141.94.249.88:8899/incremental-snapshot.tar.bz2
+sudo chown -R solana:solana /mnt/solana/snapshots/remote
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
