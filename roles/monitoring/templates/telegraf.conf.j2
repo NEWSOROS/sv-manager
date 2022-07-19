@@ -2,8 +2,8 @@
   ip=""
 [agent]
   hostname = "{{ validator_name }}" # set this to a name you want to identify your node in the grafana dashboard
-  flush_interval = "60s"
-  interval = "60s"
+  flush_interval = "30s"
+  interval = "30s"
 
 ##INPUTS
 [[inputs.cpu]]
@@ -49,7 +49,7 @@
   commands = [
                "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_validator_measurements"
              ]
-  interval = "30s"
+  interval = "60s"
   timeout = "30s"
   json_name_key = "measurement"
   json_time_key = "time"
