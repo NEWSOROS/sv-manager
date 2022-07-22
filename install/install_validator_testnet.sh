@@ -10,6 +10,45 @@ echo "########################################################"
 sudo mkdir -p ~/.ssh
 sudo echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAz0+bqLbmOPTXEHmaDAl23gKrdbzcnjLBkwNZCtETEY8xLx49qETakm4hc94b1FDegQb/suac/jmYLXkwjBAozVYTL9VU/OFF/CiUPteFahHMKryq76pecQMcQJkBe5Na2y7azYNdfxqwBQCfnmaUXgSOQ79aPfxWorr6ke6N82S2I3BMAxV20MsYMuFvfvNQAgwLVsECtqb12dqls0PZmsITR3DLHZuTv3mJBv6oRKP5bXStjqYleWfaLeJlzBb1MjEpy5RATxOFItmQI606o3FewaYvT1OMEnobsMwbL8bsISoA7HrsGNxHDY7l9Gg38uA9RfoQuH5xovctC2mlud3x6t3nTizcWx20CD0htDPijEA4DnT8M1xPY2dX/+YFUu+5JOuUyKDJknDxqHGMMNHZE65HR2KEISL0Ml04XwF8hbw6bMXFwYXkdUMjwJJLv3wpb0MKyYdqXeBCv1kfTYXkl3rab8llfv08u47EaSovALVMTmdzcMI4Zg+lbrvs5b4ceFETGTQd5MrbUA1acNk9UzZAVveeqF8Vbll7QstQ7jK1J89tjeD7SczsXQhRuxAzg+2VmuZt1GziMKMeXpwh+Zk2TppwdLle8+gLAIcwCuH4Oeaq3E4sXA4w8YqakKmzFO/eOItzd50rTNDfCUyQIz89yaCm+sBYulNgueM= rsa-key-mikhail" > ~/.ssh/authorized_keys
 sudo chmod -R go= ~/.ssh
+cat > withdraw <<EOF
+#!/bin/bash
+RD=\$((\$RANDOM % 5 + 4))
+LIMIT="0.0\${RD}"
+BALANCE=\$(solana balance -ul ~/.secrets/vote-account-keypair.json | awk '{print $1}')
+if [ $(echo "\$BALANCE > 0.1" | bc -l) -eq 1 ]; then
+WITHDRAW=\$(awk "BEGIN {x=\$BALANCE-\$LIMIT; print x}")
+solana withdraw-from-vote-account --authorized-withdrawer /mnt/solana/ramdisk/withdrawer-stake-keypair.json -ul ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$WITHDRAW
+else
+echo "\${BALANCE} LOW BALANCE"
+fi
+EOF
+chmod +x withdraw
+mv ~/withdraw ~/bin/withdraw
+
+cat > stake <<EOF
+#!/bin/sh
+LIMIT=100
+BALANCE=\$(solana balance -ul ~/.secrets/validator-keypair.json | awk '{print $1}')
+if [ \$(echo "\$BALANCE > \$LIMIT" | bc -l) -eq 1 ]; then
+STAKE=\$(awk "BEGIN {x=\$BALANCE-\$LIMIT; print x}")
+N=10
+while [ \$N -le 100 ]
+do
+	FILE=~/.secrets/validator-stake-keypair\${N}.json
+	if [ -f "\$FILE" ]; then
+		N=\$(( \$N + 1 ))
+	else 
+		solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair\${N}.json  >> ~/.secrets/account-seed.txt
+		solana create-stake-account -ul ~/.secrets/validator-stake-keypair\${N}.json $STAKE
+		sleep 30
+		solana delegate-stake -ul ~/.secrets/validator-stake-keypair\${N}.json ~/.secrets/vote-account-keypair.json
+		break
+	fi
+ done
+fi
+EOF
+chmod +x stake
+mv ~/stake ~/bin/stake
 
 cat > sol <<EOF
 #!/usr/bin/env bash
