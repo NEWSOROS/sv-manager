@@ -23,7 +23,7 @@ echo "\${BALANCE} LOW BALANCE"
 fi
 EOF
 chmod +x withdraw
-mv ~/withdraw ~/bin/withdraw
+mv ~/withdraw /home/solana/bin/withdraw
 
 cat > sol <<EOF
 #!/usr/bin/env bash
