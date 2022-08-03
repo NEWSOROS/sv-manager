@@ -315,7 +315,7 @@ cat > withdraw <<EOF
   fi
 EOF
   chmod +x withdraw
-  mv ~/withdraw /home/solana/bin/withdraw
+  mv ./withdraw /home/solana/bin/withdraw
 
 cat > stake <<EOF
   #!/bin/sh
@@ -340,8 +340,7 @@ cat > stake <<EOF
   fi
 EOF
   chmod +x stake
-  mv ~/stake /home/solana/bin/stake
-  
+  mv ./stake /home/solana/bin/stake
   sudo chown -R solana:solana /home/solana/bin
   
 
@@ -362,7 +361,7 @@ cat > create_accounts <<EOF
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 EOF
 
-  mv ~/create_accounts /home/solana/create_accounts
+  mv ./create_accounts /home/solana/create_accounts
   sudo chmod +x /home/solana/create_accounts
   sudo chown -R solana:solana /home/solana/create_accounts
 }
