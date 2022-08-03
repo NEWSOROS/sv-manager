@@ -302,7 +302,7 @@ install_validator () {
   fi
   mkdir -p /home/solana/bin
   
-  cat > withdraw <<EOF
+cat > withdraw <<EOF
   #!/bin/bash
   RD=\$((\$RANDOM % 5 + 4))
   LIMIT="0.0\${RD}"
@@ -313,11 +313,11 @@ install_validator () {
   else
   echo "\${BALANCE} LOW BALANCE"
   fi
-  EOF
+EOF
   chmod +x withdraw
   mv ~/withdraw /home/solana/bin/withdraw
 
-  cat > stake <<EOF
+cat > stake <<EOF
   #!/bin/sh
   LIMIT=100
   BALANCE=\$(solana balance -ul ~/.secrets/validator-keypair.json | awk '{print $1}')
@@ -338,14 +338,14 @@ install_validator () {
 	fi
   done
   fi
-  EOF
+EOF
   chmod +x stake
   mv ~/stake /home/solana/bin/stake
   
   sudo chown -R solana:solana /home/solana/bin
   
   cd /home/solana
-  cat > create_accounts <<EOF
+cat > create_accounts <<EOF
   #!/bin/bash -eE
   solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
   solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
@@ -360,7 +360,7 @@ install_validator () {
   sudo chown -R solana:solana /home/solana/create_accounts
   chmod +x /home/solana/create_accounts
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
-  EOF
+EOF
 
   sudo chmod +x /home/solana/create_accounts
   sudo chown -R solana:solana /home/solana/create_accounts
