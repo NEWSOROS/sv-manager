@@ -344,7 +344,7 @@ EOF
   
   sudo chown -R solana:solana /home/solana/bin
   
-  cd /home/solana
+
 cat > create_accounts <<EOF
   #!/bin/bash -eE
   solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
@@ -362,6 +362,7 @@ cat > create_accounts <<EOF
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 EOF
 
+  mv ~/create_accounts /home/solana/create_accounts
   sudo chmod +x /home/solana/create_accounts
   sudo chown -R solana:solana /home/solana/create_accounts
 }
