@@ -300,8 +300,8 @@ install_validator () {
   then
     echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
   fi
-  mkdir -p /home/solana/bin
-  cat > withdraw <<EOF
+mkdir -p /home/solana/bin
+cat > withdraw <<EOF
   #!/bin/bash
   RD=\$((\$RANDOM % 5 + 4))
   LIMIT="0.0\${RD}"
@@ -312,13 +312,12 @@ install_validator () {
   else
   echo "\${BALANCE} LOW BALANCE"
   fi
-  EOF
+EOF
   chmod +x withdraw
-  mv ~/withdraw /home/solana/bin/withdraw
+  mv ./withdraw /home/solana/bin/withdraw
   sudo chown -R solana:solana /home/solana/bin
 
-  cd /home/solana/
-  cat > create_accounts <<EOF
+cat > create_accounts <<EOF
   #!/bin/bash -eE
   solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
   solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
@@ -329,8 +328,9 @@ install_validator () {
   solana vote-authorize-withdrawer ~/.secrets/vote-account-keypair.json ~/.secrets/withdrawer-stake-keypair.json ~/.secrets/validator-keypair.json
   echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58"
   echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"
-  EOF
+EOF
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
+  mv ./create_accounts /home/solana/create_accounts
   sudo chmod +x /home/solana/create_accounts
   sudo chown -R solana:solana /home/solana/create_accounts
 }
