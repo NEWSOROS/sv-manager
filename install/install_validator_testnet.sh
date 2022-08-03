@@ -339,7 +339,8 @@ install_validator () {
   then
     echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
   fi
-  cat > /home/solana/create_accounts <<EOF
+  cd /home/solana
+  cat > create_accounts <<EOF
   #!/bin/bash -eE
   solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
   solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
