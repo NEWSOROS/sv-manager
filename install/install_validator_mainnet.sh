@@ -306,7 +306,7 @@ cat > withdraw <<EOF
   RD=\$((\$RANDOM % 5 + 4))
   LIMIT="0.0\${RD}"
   BALANCE=\$(solana balance -ul ~/.secrets/vote-account-keypair.json | awk '{print $1}')
-  if [ $(echo "\$BALANCE > 0.1" | bc -l) -eq 1 ]; then
+  if [ \$(echo "\$BALANCE > 0.1" | bc -l) -eq 1 ]; then
   WITHDRAW=\$(awk "BEGIN {x=\$BALANCE-\$LIMIT; print x}")
   solana withdraw-from-vote-account --authorized-withdrawer /mnt/solana/ramdisk/withdrawer-stake-keypair.json -ul ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$WITHDRAW
   else
