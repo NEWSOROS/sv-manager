@@ -314,8 +314,10 @@ fi
 EOF
 chmod +x withdraw
 mv ~/withdraw /home/solana/bin/withdraw
+sudo chown -R solana:solana /home/solana/bin/withdraw
 
-cat > /home/solana/create_accounts <<EOF
+cd /home/solana/
+cat > create_accounts <<EOF
   #!/bin/bash -eE
   solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
   solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
