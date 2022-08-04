@@ -302,32 +302,32 @@ install_validator () {
   fi
 mkdir -p /home/solana/bin
 cat > withdraw <<EOF
-  #!/bin/bash
-  RD=\$((\$RANDOM % 5 + 4))
-  LIMIT="0.0\${RD}"
-  BALANCE=\$(solana balance -ul ~/.secrets/vote-account-keypair.json | awk '{print $1}')
-  if [ \$(echo "\$BALANCE > 0.1" | bc -l) -eq 1 ]; then
-  WITHDRAW=\$(awk "BEGIN {x=\$BALANCE-\$LIMIT; print x}")
-  solana withdraw-from-vote-account --authorized-withdrawer /mnt/solana/ramdisk/withdrawer-stake-keypair.json -ul ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$WITHDRAW
-  else
-  echo "\${BALANCE} LOW BALANCE"
-  fi
+#!/bin/bash
+RD=\$((\$RANDOM % 5 + 4))
+LIMIT="0.0\${RD}"
+BALANCE=\$(solana balance -ul ~/.secrets/vote-account-keypair.json | awk '{print \$1}')
+if [ \$(echo "\$BALANCE > 0.1" | bc -l) -eq 1 ]; then
+WITHDRAW=\$(awk "BEGIN {x=\$BALANCE-\$LIMIT; print x}")
+solana withdraw-from-vote-account --authorized-withdrawer /mnt/solana/ramdisk/withdrawer-stake-keypair.json -ul ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$WITHDRAW
+else
+echo "\${BALANCE} LOW BALANCE"
+fi
 EOF
   chmod +x withdraw
   mv ./withdraw /home/solana/bin/withdraw
   sudo chown -R solana:solana /home/solana/bin
 
 cat > create_accounts <<EOF
-  #!/bin/bash -eE
-  solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
-  solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
-  solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair.json  >> ~/.secrets/account-seed.txt
-  solana-keygen new --no-bip39-passphrase -o ~/.secrets/withdrawer-stake-keypair.json  >> ~/.secrets/account-seed.txt
-  solana create-vote-account ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$(solana-keygen pubkey ~/.secrets/withdrawer-stake-keypair.json)
-  solana vote-update-commission ~/.secrets/vote-account-keypair.json 10 ~/.secrets/withdrawer-stake-keypair.json
-  solana vote-authorize-withdrawer ~/.secrets/vote-account-keypair.json ~/.secrets/withdrawer-stake-keypair.json ~/.secrets/validator-keypair.json
-  echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58"
-  echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"
+#!/bin/bash -eE
+solana config set --url https://api.mainnet-beta.solana.com --keypair ~/.secrets/validator-keypair.json
+solana-keygen new --no-bip39-passphrase -o ~/.secrets/vote-account-keypair.json >> ~/.secrets/account-seed.txt
+solana-keygen new --no-bip39-passphrase -o ~/.secrets/validator-stake-keypair.json  >> ~/.secrets/account-seed.txt
+solana-keygen new --no-bip39-passphrase -o ~/.secrets/withdrawer-stake-keypair.json  >> ~/.secrets/account-seed.txt
+solana create-vote-account ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json \$(solana-keygen pubkey ~/.secrets/withdrawer-stake-keypair.json)
+solana vote-update-commission ~/.secrets/vote-account-keypair.json 10 ~/.secrets/withdrawer-stake-keypair.json
+solana vote-authorize-withdrawer ~/.secrets/vote-account-keypair.json ~/.secrets/withdrawer-stake-keypair.json ~/.secrets/validator-keypair.json
+echo "solana create-stake-account /home/solana/.secrets/validator-stake-keypair.json 58"
+echo "solana delegate-stake /home/solana/.secrets/validator-stake-keypair.json /home/solana/.secrets/vote-account-keypair.json"
 EOF
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
   mv ./create_accounts /home/solana/create_accounts
