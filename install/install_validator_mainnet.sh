@@ -52,6 +52,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart solana-sys-tuner
 sudo systemctl restart solana-validator
 sudo systemctl --no-pager status solana-validator
+sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
 EOF
 chmod +x update
 
@@ -180,6 +181,7 @@ cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
+sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
 EOF
 chmod +x restart
 
@@ -197,6 +199,7 @@ rm -rf /mnt/solana/log/*
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
+sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
 EOF
 chmod +x erase
 
@@ -216,6 +219,7 @@ sudo chown -R solana:solana /mnt/solana/snapshots/remote
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
+sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
 EOF
 chmod +x snapshot
 
