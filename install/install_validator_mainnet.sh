@@ -176,6 +176,7 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
 sudo rm -rf /mnt/solana/ledger/*
+cd /mnt/solana/accounts && find . -name "*" -delete
 cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
 sudo systemctl restart solana-sys-tuner
@@ -193,6 +194,7 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
 sudo rm -rf /mnt/solana/ledger/*
+cd /mnt/solana/accounts && find . -name "*" -delete
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
@@ -209,6 +211,7 @@ set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sudo rm -rf /mnt/solana/ledger/*
+cd /mnt/solana/accounts && find . -name "*" -delete
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
