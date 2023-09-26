@@ -213,8 +213,8 @@ cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 mkdir -p /mnt/solana/snapshots/remote
-cd /mnt/solana/snapshots/remote && wget --trust-server-names http://141.95.192.18:8899/snapshot.tar.bz2
-cd /mnt/solana/snapshots/remote && wget --trust-server-names http://141.95.192.18:8899/incremental-snapshot.tar.bz2
+cd /mnt/solana/snapshots/remote && wget --trust-server-names http://80.79.7.143:8899/snapshot.tar.bz2
+cd /mnt/solana/snapshots/remote && wget --trust-server-names http://80.79.7.143:8899/incremental-snapshot.tar.bz2
 sudo chown -R solana:solana /mnt/solana/snapshots/remote
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
