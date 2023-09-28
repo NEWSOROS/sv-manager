@@ -263,7 +263,7 @@ install_validator () {
   ansible-galaxy collection install ansible.posix
   ansible-galaxy collection install community.general
 
-  IP=$(curl -4 icanhazip.com)
+  IP=$2
   echo "Downloading Solana validator manager version $sv_manager_version"
   cmd="https://github.com/NEWSOROS/sv-manager/archive/refs/tags/$sv_manager_version.zip"
   echo "starting $cmd"
