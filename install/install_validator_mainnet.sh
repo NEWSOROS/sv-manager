@@ -175,7 +175,7 @@ set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
-sudo rm -rf /mnt/solana/ledger/*
+#sudo rm -rf /mnt/solana/ledger/*
 cd /mnt/solana/accounts && find . -name "*" -delete
 cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
@@ -216,8 +216,8 @@ cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 mkdir -p /mnt/solana/snapshots/remote
-cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.a4.finance:8899/snapshot.tar.bz2
-cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.a4.finance:8899/incremental-snapshot.tar.bz2
+cd /mnt/solana/snapshots/remote && wget --trust-server-names  https://api-solana.tlinks.online:8899/snapshot.tar.bz2
+cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.tlinks.online:8899/incremental-snapshot.tar.bz2
 sudo chown -R solana:solana /mnt/solana/snapshots/remote
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
@@ -245,7 +245,7 @@ install_validator () {
     exit
   fi
 
-  RAM_DISK_SIZE=1
+  RAM_DISK_SIZE=150
   SWAP_SIZE=200
 
   rm -rf sv_manager/
