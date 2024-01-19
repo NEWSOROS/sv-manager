@@ -18,6 +18,5 @@ limit_ledger_size: 50000000
 snapshot_interval_slots: 500
 maximum_local_snapshot_age: 25000
 solana_version: 1.17.16
-swap_file_size_gb: 1
 extra_params:
   - --full-rpc-api
