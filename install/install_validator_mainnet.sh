@@ -245,7 +245,7 @@ install_validator () {
     exit
   fi
 
-  RAM_DISK_SIZE=150
+  RAM_DISK_SIZE=250
   SWAP_SIZE=0
 
   rm -rf sv_manager/
