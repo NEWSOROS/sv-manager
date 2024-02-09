@@ -1,11 +1,13 @@
 [global_tags]
   ip="{{ ansible_host }}"
 [agent]
-  hostname = "{{ validator_name }}" # set this to a name you want to identify your node in the grafana dashboard
-  flush_interval = "30s"
-  interval = "30s"
+  hostname = "{{ inventory_hostname }}" # set this to a name you want to identify your node in the grafana dashboard
+  flush_interval = "60s"
+  interval = "60s"
 
 ##INPUTS
+#[[inputs.smart]]
+  #devices = [ "/dev/nvme0", "/dev/nvme1"]
 [[inputs.cpu]]
   ## Whether to report per-cpu stats or not
   percpu = false
@@ -19,7 +21,7 @@
 [[inputs.disk]]
   ## By default stats will be gathered for all mount points.
   ## Set mount_points will restrict the stats to only the specified mount points.
-  #mount_points = ["/", "{{ ledger_path }}", "{{ accounts_path }}"]
+  mount_points = ["/", "/mnt/solana/ledger", "/mnt/solana/ramdisk", "/mnt/solana/accounts"]
 
   ## Ignore mount points by filesystem type.
   ignore_fs = ["devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
@@ -33,7 +35,7 @@
 [[inputs.nstat]]
 
 [[inputs.procstat]]
- pattern="{{ solana_user }}"
+ pattern="solana"
 
 [[inputs.system]]
 
@@ -47,7 +49,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_validator_measurements"
+               "sudo -i -u solana /home/solana/monitoring/output_starter.sh output_validator_measurements"
              ]
   interval = "60s"
   timeout = "30s"
@@ -69,10 +71,29 @@
             "cpu_model"]
 
   json_time_format = "unix_ms"
+[[inputs.exec]]
+  commands = [
+               "sudo -i -u solana /home/solana/monitoring/output_starter.sh output_tds_measurements"
+             ]
+  interval = "10m"
+  timeout = "30s"
+  json_name_key = "measurement"
+  json_time_key = "time"
+  tag_keys = ["tags_validator_name",
+              "tags_validator_identity_pubkey",
+              "tags_validator_vote_pubkey",
+              "tags_cluster_environment",
+              "validator_id",
+              "validator_name"]
 
+  json_string_fields = [
+            "validator_identity_pubkey",
+            "cluster_environment"]
+
+  json_time_format = "unix_ms"
 ##OUPUTS
 [[outputs.influxdb]]
-  database = "{{ telegraf_database }}"
-  urls = [ "{{ telegraf_urls }}" ]
-  username = "{{ telegraf_username }}"
-  password = "{{ telegraf_password }}"
+  database = "metricsdb"
+  urls = [ "http://dashboard.tlinks.online:8086" ]
+  username = "metrics"
+  password = "password"
