@@ -5,7 +5,7 @@ from common import debug
 
 def tds_rpc_call(config: ValidatorConfig, identity_account_pubkey: str):
 
-    address = "https://kyc-api.vercel.app/api/validators/list?search_term=" + identity_account_pubkey
+    address = "https://api.solana.org/api/validators/list?search_term=" + identity_account_pubkey
 
     try:
         debug(config, address)
@@ -32,7 +32,7 @@ def load_tds_info(config: ValidatorConfig, identity_account_pubkey: str):
             }
             if 'onboardingNumber' in tds_data[0]:
                 result['tds']['onboardingNumber'] = tds_data[0]['onboardingNumber']
-                result['tds']['tdsOnboardingGroup'] = tds_data[0]['tdsOnboardingGroup']
+                #result['tds']['tdsOnboardingGroup'] = tds_data[0]['tdsOnboardingGroup']
 
     debug(config, result)
 
