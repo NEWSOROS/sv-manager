@@ -38,15 +38,17 @@ chmod +x catchup
 cat > update <<EOF
 #!/usr/bin/env bash
 # Software update
-if [[ -z \$1 ]]; then
-  echo "Usage: \$0 [version]"
+if [[ -z $1 ]]; then
+  echo "Usage: $0 [version]"
   exit 1
 fi
 set -ex
-if [[ \$USER != solana ]]; then
-  sudo --login -u solana -- solana-install init "\$@"
+if [[ $USER != solana ]]; then
+  sudo --login -u solana -- solana-install init "$@"
+  #sudo --login -u solana -- solana-validator --ledger /mnt/solana/ledger wait-for-restart-window --min-idle-time 100 --max-delinquent-stake 10
 else
-  solana-install init "\$@"
+  solana-install init "$@"
+  #solana-validator --ledger /mnt/solana/ledger wait-for-restart-window --min-idle-time 100 --max-delinquent-stake 10
 fi
 sudo systemctl daemon-reload
 sudo systemctl restart solana-sys-tuner
@@ -176,8 +178,8 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
 #sudo rm -rf /mnt/solana/ledger/*
-cd /mnt/solana/accounts && find . -name "*" -delete
-cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
+#cd /mnt/solana/accounts && find . -name "*" -delete
+cd /mnt/solana/ramdisk/incremental_snapshot/ && find . -name "tmp-*zst" -delete
 cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
@@ -194,8 +196,8 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
 sudo rm -rf /mnt/solana/ledger/*
-cd /mnt/solana/accounts && find . -name "*" -delete
-cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
+cd /mnt/solana/accounts/ && find . -name "*" -delete
+cd /mnt/solana/ramdisk/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 sudo systemctl restart solana-sys-tuner
@@ -210,20 +212,21 @@ cat > snapshot <<EOF
 set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
-sudo rm -rf /mnt/solana/ledger/*
-cd /mnt/solana/accounts && find . -name "*" -delete
+sudo rm -rf /mnt/solana/ledger/rocksdb
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
+cd /mnt/solana/ramdisk/incremental_snapshot/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 mkdir -p /mnt/solana/snapshots/remote
-mkdir -p /mnt/solana/ramdisk/incremental_snapshot
-cd /mnt/solana/snapshots/remote && wget --trust-server-names  https://api-solana.tlinks.online:8899/snapshot.tar.bz2
-cd /mnt/solana/ramdisk/incremental_snapshot && wget --trust-server-names https://api-solana.tlinks.online:8899/incremental-snapshot.tar.bz2
+mkdir -p /mnt/solana/ramdisk/incremental_snapshot/remote
+cd /mnt/solana/snapshots/remote && wget --trust-server-names https://api-solana.tlinks.online:8899/snapshot.tar.bz2
+cd /mnt/solana/ramdisk/incremental_snapshot/remote && wget --trust-server-names https://api-solana.tlinks.online:8899/incremental-snapshot.tar.bz2
 sudo chown -R solana:solana /mnt/solana/snapshots/remote
-sudo chown -R solana:solana /mnt/solana/ramdisk/incremental_snapshot
+sudo chown -R solana:solana /mnt/solana/ramdisk/incremental_snapshot/remote
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
+sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
 EOF
 chmod +x snapshot
 
