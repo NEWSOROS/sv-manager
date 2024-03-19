@@ -176,7 +176,8 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
 #sudo rm -rf /mnt/solana/ledger/*
-cd /mnt/solana/ramdisk/accounts && find . -name "*" -delete
+#cd /mnt/solana/accounts && find . -name "*" -delete
+cd /mnt/solana/ramdisk/incremental_snapshot/ && find . -name "tmp-*zst" -delete
 cd /mnt/solana/snapshots/ && find . -name "tmp-*zst" -delete
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
@@ -193,7 +194,8 @@ sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
 sleep 5
 sudo rm -rf /mnt/solana/ledger/*
-cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
+cd /mnt/solana/accounts/ && find . -name "*" -delete
+cd /mnt/solana/ramdisk/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 sudo systemctl restart solana-sys-tuner
@@ -208,14 +210,17 @@ cat > snapshot <<EOF
 set -ex
 sudo systemctl daemon-reload
 sudo systemctl stop solana-validator
-sudo rm -rf /mnt/solana/ledger/*
+sudo rm -rf /mnt/solana/ledger/rocksdb
 cd /mnt/solana/ramdisk/accounts/ && find . -name "*" -delete
 cd /mnt/solana/snapshots/ && find . -name "*" -delete
+cd /mnt/solana/ramdisk/incremental_snapshot/ && find . -name "*" -delete
 rm -rf /mnt/solana/log/*
 mkdir -p /mnt/solana/snapshots/remote
-cd /mnt/solana/snapshots/remote && wget --trust-server-names http://69.197.49.134:8899/snapshot.tar.bz2
-cd /mnt/solana/snapshots/remote && wget --trust-server-names http://69.197.49.134:8899/incremental-snapshot.tar.bz2
+mkdir -p /mnt/solana/ramdisk/incremental_snapshot/remote
+cd /mnt/solana/snapshots/remote && wget --trust-server-names http://80.79.7.142:8899/snapshot.tar.bz2
+cd /mnt/solana/ramdisk/incremental_snapshot/remote && wget --trust-server-names http://80.79.7.142:8899/incremental-snapshot.tar.bz2
 sudo chown -R solana:solana /mnt/solana/snapshots/remote
+sudo chown -R solana:solana /mnt/solana/ramdisk/incremental_snapshot/remote
 sudo systemctl restart solana-sys-tuner
 sudo systemctl start solana-validator
 sudo systemctl --no-pager status solana-validator
