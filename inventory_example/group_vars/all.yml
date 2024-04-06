@@ -19,7 +19,7 @@ local_secrets_path: '../.secrets'
 log_level: "INFO"
 rust_enabled: True
 lvm_enabled: False
-lvm_log_volume_size: '1G'
+lvm_log_volume_size: '25G'
 lvm_vg: 'vg00'
 mount_base_path: '/mnt/solana'
 name: "{{ inventory_hostname }}"
