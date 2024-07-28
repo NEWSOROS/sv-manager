@@ -30,5 +30,8 @@
       - llvm
       - clang
       - make
+      - libprotobuf-dev
+      - protobuf-compiler
+      - smartmontools
   tags:
     - config.packages
