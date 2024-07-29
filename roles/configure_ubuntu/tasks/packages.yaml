@@ -33,5 +33,6 @@
       - libprotobuf-dev
       - protobuf-compiler
       - smartmontools
+      - jq
   tags:
     - config.packages
