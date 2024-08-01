@@ -6,8 +6,9 @@
   interval = "60s"
 
 ##INPUTS
-#[[inputs.smart]]
-  #devices = [ "/dev/nvme0", "/dev/nvme1"]
+[[inputs.smartctl]]
+  devices_include = [ "/dev/nvme0", "/dev/nvme1"]
+  use_sudo = true
 [[inputs.cpu]]
   ## Whether to report per-cpu stats or not
   percpu = false
