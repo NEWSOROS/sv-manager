@@ -29,9 +29,9 @@ chmod +x sol
 cat > catchup <<EOF
 #!/usr/bin/env bash
 if [[ \$USER != solana ]]; then
-  sudo --login -u solana -- solana catchup /home/solana/.secrets/validator-keypair.json http://127.0.0.1:8899/ 
+  sudo --login -u solana -- solana catchup --output json-compact /home/solana/.secrets/identity.json http://127.0.0.1:8899/
 else
-  solana catchup /home/solana/.secrets/validator-keypair.json http://127.0.0.1:8899/
+  solana catchup --output json-compact /home/solana/.secrets/identity.json http://127.0.0.1:8899/
 fi
 EOF
 chmod +x catchup
