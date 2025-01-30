@@ -165,6 +165,7 @@ def get_validators_metric(validators, identity_account_pubkey):
             if identity_account_pubkey == v['identityPubkey']:
                 current_last_vote = v['lastVote']
                 current_root_slot = v['rootSlot']
+                current_place = v['place']
 
         epoch_credits = np.array(epoch_credits_l, dtype=np.int32)
         last_vote = np.array(last_vote_l, dtype=np.int32)
@@ -199,7 +200,8 @@ def get_validators_metric(validators, identity_account_pubkey):
             'cluster_min_root_slot_v2': cluster_min_root_slot,
             'cluster_mean_root_slot_v2': cluster_mean_root_slot,
             'cluster_median_root_slot': cluster_median_root_slot,
-            'current_root_slot': current_root_slot
+            'current_root_slot': current_root_slot,
+            'current_place': current_place
         }
 
     else:

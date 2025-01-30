@@ -2,6 +2,10 @@ from common import ValidatorConfig
 from typing import Optional
 from common import debug
 from request_utils import execute_cmd_str, smart_rpc_call, rpc_call
+import subprocess
+import json
+import time
+from datetime import datetime, timedelta
 
 
 def load_identity_account_pubkey(config: ValidatorConfig) -> Optional[str]:
@@ -120,9 +124,13 @@ def load_stake_account_rewards(config: ValidatorConfig, stake_account):
 def load_solana_validators(config: ValidatorConfig):
     cmd = f'solana validators -ul --output json-compact'
     data = execute_cmd_str(config, cmd, convert_to_json=True)
-
+    
     if (data is not None) and ('validators' in data):
-        return data['validators']
+        validators = data['validators']
+        sorted_validators = sorted(validators, key=lambda x: x['credits'], reverse=True)
+        for i, validator in enumerate(sorted_validators, start=1):
+            validator['place'] = i
+        return sorted_validators
     else:
         return None
 
@@ -200,4 +208,41 @@ def load_solana_gossip(config: ValidatorConfig):
     cmd = f'solana gossip -ul --output json-compact'
     return execute_cmd_str(config, cmd, convert_to_json=True)
 
+# Function to get current time
+def get_current_time():
+    return datetime.now()
 
+def load_relayer_current_connectivity(config: ValidatorConfig):
+    log_command = f"sudo journalctl --since '5 hours ago' -u relayer -o cat | grep 'Current epoch connectivity' | tail -n 1"
+    result = subprocess.run(log_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    
+    # Check if there's an error in stderr
+    if result.stderr:
+        error_message = result.stderr.decode('utf-8').strip()
+        if "Failed to iterate through journal: Bad message" in error_message:
+            #print("Journal error: Bad message. Check journal system health.")
+            return {'log_delay': None, 'connectivity': None, 'error': 0}  # Return True to indicate an error
+        else:
+            #print(f"Other journal error: {error_message}")
+            return {'log_delay': None, 'connectivity': None, 'error': 0}  # Return True to indicate an error
+    
+    log_line = result.stdout.decode('utf-8').strip()
+    
+    if log_line:
+        try:
+            # Extract timestamp and percentage
+            log_time_str = log_line.split('[')[1].split(']')[0].split(' ')[0]  # Parse only the time part
+            log_time = datetime.strptime(log_time_str, '%Y-%m-%dT%H:%M:%S.%fZ')
+            current_time = get_current_time()
+            log_delay = int((current_time - log_time).total_seconds())
+            connectivity = float(log_line.split("Current epoch connectivity: ")[1].replace('%', ''))
+            #print(f"Log entry found: {log_time}, connectivity: {connectivity}%")
+            return {'log_delay': log_delay, 'connectivity': connectivity, 'error': 1}  # Return False to indicate no error
+            #return {'connectivity': connectivity, 'error': False}  # Return False to indicate no error
+        except Exception as e:
+            #print(f"Error parsing log line: {e}")
+            return {'log_delay': None, 'connectivity': None, 'error': 0}  # Return True to indicate an error
+    else:
+        #print("No log entries found")
+        return {'log_delay': None, 'connectivity': None, 'error': 1}  # Return False, as no error but no log found either
+ 
